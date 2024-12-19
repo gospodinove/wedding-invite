@@ -1,197 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Wedding Invitation</title>
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background: linear-gradient(135deg, #ffecd2, #fcb69f);
+                font-family: "Arial", sans-serif;
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Invitation</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #ffecd2, #fcb69f);
-            font-family: 'Arial', sans-serif;
-        }
+            .envelope-container {
+                perspective: 1200px;
+            }
 
-        .envelope-container {
-            perspective: 1200px;
-        }
+            .envelope {
+                width: 500px;
+                height: 350px;
+                position: relative;
+                transform-style: preserve-3d;
+                cursor: pointer;
+                transition: transform 1s ease-in-out;
+                z-index: 1;
+                /* Ensure envelope stays behind invitation */
+            }
 
-        .envelope {
-            width: 350px;
-            height: 250px;
-            position: relative;
-            transform-style: preserve-3d;
-            cursor: pointer;
-            transition: transform 1s ease-in-out;
-            z-index: 1;
-            /* Ensure envelope stays behind invitation */
-        }
+            .envelope.show-back {
+                transform: rotateY(180deg);
+            }
 
-        .envelope.show-back {
-            transform: rotateY(180deg);
-        }
+            .front,
+            .back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: #fff;
+                border: 2px solid #d3c6b3;
+                backface-visibility: hidden;
+            }
 
-        .front,
-        .back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            border: 2px solid #d3c6b3;
-            backface-visibility: hidden;
-        }
+            .front {
+                transform: rotateY(0deg);
+                z-index: 2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 18px;
+                font-weight: bold;
+                color: #555;
+            }
 
-        .front {
-            transform: rotateY(0deg);
-            z-index: 2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-            font-weight: bold;
-            color: #555;
-        }
+            .back {
+                background: #f9f2ed;
+                transform: rotateY(180deg);
+                z-index: 1;
+            }
 
-        .back {
-            background: #f9f2ed;
-            transform: rotateY(180deg);
-            z-index: 1;
-        }
+            .flap {
+                position: absolute;
+                width: 100%;
+                height: 50%;
+                top: -50%;
+                left: 0;
+                background: #e8d6cf;
+                clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+                transform-origin: bottom;
+                z-index: 3;
+                transform: rotateX(-180deg);
+                /* Flap starts down (hidden position) */
+                opacity: 0;
+                transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.5s ease-in-out;
+                /* border: 2px solid #d3c6b3; */
+            }
 
-        .flap {
-            position: absolute;
-            width: 100%;
-            height: 50%;
-            top: -50%;
-            left: 0;
-            background: #e8d6cf;
-            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-            transform-origin: bottom;
-            z-index: 3;
-            transform: rotateX(-180deg);
-            /* Flap starts down (hidden position) */
-            opacity: 0;
-            transition: transform 1s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.5s ease-in-out;
-            /* border: 2px solid #d3c6b3; */
-        }
+            .envelope.show-back .flap {
+                opacity: 1;
+                /* Flap becomes visible when showing the back */
+            }
 
-        .envelope.show-back .flap {
-            opacity: 1;
-            /* Flap becomes visible when showing the back */
-        }
+            .envelope.open .flap {
+                transform: rotateX(0deg);
+                /* Flap opens smoothly */
+            }
 
-        .envelope.open .flap {
-            transform: rotateX(0deg);
-            /* Flap opens smoothly */
-        }
+            .invitation {
+                position: absolute;
+                width: 90%;
+                height: 180%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) translateY(80px) scaleX(-1);
+                /* Mirrored invitation */
+                background: #fff;
+                border: 2px solid #d3c6b3;
+                padding: 20px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                font-size: 20px;
+                color: #333;
+                z-index: 4;
+                /* Invitation is above the envelope */
+                opacity: 0;
+                transition: transform 1s ease-in-out, opacity 0.5s ease-in-out;
+            }
 
-        .invitation {
-            position: absolute;
-            width: 90%;
-            height: 140%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) translateY(80px) scaleX(-1);
-            /* Mirrored invitation */
-            background: #fff;
-            border: 2px solid #d3c6b3;
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-            color: #333;
-            z-index: 4;
-            /* Invitation is above the envelope */
-            opacity: 0;
-            transition: transform 1s ease-in-out, opacity 0.5s ease-in-out;
-        }
+            .invitation h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+                color: #6b4226;
+            }
 
-        .invitation h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: #6b4226;
-        }
+            .invitation p {
+                margin: 5px 0;
+            }
 
-        .invitation p {
-            margin: 5px 0;
-        }
+            .envelope.open .invitation.show {
+                transform: translate(-50%, -50%) translateY(-120px) scaleX(-1);
+                /* Mirrored invitation stays mirrored */
+                opacity: 1;
+            }
+        </style>
+    </head>
 
-        .envelope.open .invitation.show {
-            transform: translate(-50%, -50%) translateY(-120px) scaleX(-1);
-            /* Mirrored invitation stays mirrored */
-            opacity: 1;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="envelope-container">
-        <div class="envelope" id="envelope">
-            <div class="back">
-                <div class="flap"></div>
-            </div>
-            <div class="front">Click to Open!</div>
-            <div class="invitation">
-                <h1>John & Jane</h1>
-                <p>Request the honor of your presence</p>
-                <p>at their wedding</p>
-                <p>Date: June 15, 2024</p>
-                <p>Venue: Grand Hall</p>
+    <body>
+        <div class="envelope-container">
+            <div class="envelope" id="envelope">
+                <div class="back">
+                    <div class="flap"></div>
+                </div>
+                <div class="front">Click to Open!</div>
+                <div class="invitation">
+                    <h1>John & Jane</h1>
+                    <p>Request the honor of your presence</p>
+                    <p>at their wedding</p>
+                    <p>Date: June 15, 2024</p>
+                    <p>Venue: Grand Hall</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        const envelope = document.getElementById('envelope');
-        const flap = document.querySelector('.flap');
-        const invitation = document.querySelector('.invitation');
+        <script>
+            const envelope = document.getElementById("envelope");
+            const flap = document.querySelector(".flap");
+            const invitation = document.querySelector(".invitation");
 
-        // State management for flipping and opening
-        let isFlipped = false;
+            // State management for flipping and opening
+            let isFlipped = false;
 
-        envelope.addEventListener('click', () => {
-            if (!isFlipped) {
-                // Start the turn animation to show the back
-                envelope.classList.add('show-back');
-                isFlipped = true;
+            envelope.addEventListener("click", () => {
+                if (!isFlipped) {
+                    // Start the turn animation to show the back
+                    envelope.classList.add("show-back");
+                    isFlipped = true;
 
-                // Show the flap immediately after the turn starts
-                setTimeout(() => {
-                    flap.style.opacity = '1';
-
-                    // Wait briefly, then start opening the flap smoothly
+                    // Show the flap immediately after the turn starts
                     setTimeout(() => {
-                        envelope.classList.add('open');
+                        flap.style.opacity = "1";
 
-                        // Show the invitation after the flap is fully opened
+                        // Wait briefly, then start opening the flap smoothly
                         setTimeout(() => {
-                            invitation.classList.add('show');
-                        }, 1000); // Delay after flap animation completes
-                    }, 500); // Delay before the flap starts opening
-                }, 200); // Flap appears slightly after the turn starts
-            }
-        });
-    </script>
+                            envelope.classList.add("open");
 
-    <script>
-        // Step 1: Get the current URL
-        const urlParams = new URLSearchParams(window.location.search);
+                            // Show the invitation after the flap is fully opened
+                            setTimeout(() => {
+                                invitation.classList.add("show");
+                            }, 1000); // Delay after flap animation completes
+                        }, 500); // Delay before the flap starts opening
+                    }, 200); // Flap appears slightly after the turn starts
+                }
+            });
+        </script>
 
-        // Step 2: Get specific parameters
-        const names = urlParams.get('names');
-        const param2 = urlParams.get('hasPlusOne');
+        <script>
+            // Step 1: Get the current URL
+            const urlParams = new URLSearchParams(window.location.search);
 
-        // Step 3: Display the parameters (or use them in your logic)
-        const outputElement = document.querySelector('.front');
-        outputElement.textContent = `Hello ${names}`;
-    </script>
-</body>
+            // Step 2: Get specific parameters
+            const names = urlParams.get("names");
+            const param2 = urlParams.get("hasPlusOne");
 
+            // Step 3: Display the parameters (or use them in your logic)
+            const outputElement = document.querySelector(".front");
+            outputElement.textContent = `Hello ${names}`;
+        </script>
+    </body>
 </html>
