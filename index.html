@@ -56,9 +56,16 @@
             }
 
             .back {
-                background: #f9f2ed;
                 transform: rotateY(180deg);
                 z-index: 1;
+            }
+
+            .back .back-cutout {
+                background: #f9f2ed;
+                clip-path: polygon(0% 0%, 50% 40%, 100% 0%, 100% 100%, 0% 100%);
+                width: 100%;
+                height: 100%;
+                position: relative;
             }
 
             .flap {
@@ -68,7 +75,7 @@
                 top: -50%;
                 left: 0;
                 background: #e8d6cf;
-                clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+                clip-path: polygon(5% 75%, 50% 0%, 95% 75%, 100% 100%, 0% 100%);
                 transform-origin: bottom;
                 z-index: 3;
                 transform: rotateX(-180deg);
@@ -136,6 +143,7 @@
             <div class="envelope" id="envelope">
                 <div class="back">
                     <div class="flap"></div>
+                    <div class="back-cutout"></div>
                 </div>
                 <div class="front">Click to Open!</div>
                 <div class="invitation">
