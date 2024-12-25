@@ -33,6 +33,7 @@
             const envelope = document.getElementById("envelope");
             const flap = document.querySelector(".flap");
             const invitation = document.querySelector(".invitation");
+            const backCutout = document.querySelector(".back-cutout");
 
             let isFlipped = false;
 
@@ -47,6 +48,11 @@
                             envelope.classList.add("open");
                             setTimeout(() => {
                                 flap.style.zIndex = "1";
+
+                                setTimeout(() => {
+                                    backCutout.style.zIndex = "2";
+                                }, 500);
+
                                 invitation.classList.add("show");
                             }, 500);
                         }, 500);

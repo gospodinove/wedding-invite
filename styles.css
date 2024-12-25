@@ -94,11 +94,10 @@ body {
 
 .invitation {
   position: absolute;
-  width: 90%;
-  height: auto;
+  width: 300px;
+  height: 450px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   background: #fff;
   border: 2px solid #d3c6b3;
   padding: 20px;
@@ -110,12 +109,27 @@ body {
   font-size: 20px;
   color: #333;
   z-index: 2;
-  transition: transform 1s ease, opacity 0.5s ease;
+  transform: translate(-50%, -50%) rotate(-90deg) scale(0.8);
 }
 
 .envelope.open .invitation.show {
-  transform: translate(-50%, -150%) scale(1);
-  opacity: 1;
+  animation-name: moveColorChange;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes moveColorChange {
+  0% {
+    transform: translate(-50%, -50%) rotate(-90deg) scale(0.8);
+  }
+
+  50% {
+    transform: translate(-50%, -130%) scale(1);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+  }
 }
 
 .invitation h1 {
