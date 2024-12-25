@@ -12,16 +12,20 @@
             <div class="envelope" id="envelope">
                 <div class="back">
                     <div class="flap"></div>
+
                     <div class="back-cutout"></div>
+                    <div class="back-background"></div>
+
+                    <div class="invitation">
+                        <h1>John & Jane</h1>
+                        <p>Request the honor of your presence</p>
+                        <p>at their wedding</p>
+                        <p>Date: June 15, 2024</p>
+                        <p>Venue: Grand Hall</p>
+                    </div>
                 </div>
+
                 <div class="front">Click to Open!</div>
-                <div class="invitation">
-                    <h1>John & Jane</h1>
-                    <p>Request the honor of your presence</p>
-                    <p>at their wedding</p>
-                    <p>Date: June 15, 2024</p>
-                    <p>Venue: Grand Hall</p>
-                </div>
             </div>
         </div>
 
@@ -30,29 +34,23 @@
             const flap = document.querySelector(".flap");
             const invitation = document.querySelector(".invitation");
 
-            // State management for flipping and opening
             let isFlipped = false;
 
             envelope.addEventListener("click", () => {
                 if (!isFlipped) {
-                    // Start the turn animation to show the back
                     envelope.classList.add("show-back");
                     isFlipped = true;
 
-                    // Show the flap immediately after the turn starts
                     setTimeout(() => {
                         flap.style.opacity = "1";
-
-                        // Wait briefly, then start opening the flap smoothly
                         setTimeout(() => {
                             envelope.classList.add("open");
-
-                            // Show the invitation after the flap is fully opened
                             setTimeout(() => {
+                                flap.style.zIndex = "1";
                                 invitation.classList.add("show");
-                            }, 1000); // Delay after flap animation completes
-                        }, 500); // Delay before the flap starts opening
-                    }, 200); // Flap appears slightly after the turn starts
+                            }, 500);
+                        }, 500);
+                    }, 200);
                 }
             });
         </script>
@@ -62,7 +60,7 @@
             const urlParams = new URLSearchParams(window.location.search);
 
             // Step 2: Get specific parameters
-            const names = urlParams.get("names");
+            const names = urlParams.get("names") ?? "";
             const param2 = urlParams.get("hasPlusOne");
 
             // Step 3: Display the parameters (or use them in your logic)
