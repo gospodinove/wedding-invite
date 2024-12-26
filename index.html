@@ -11,21 +11,31 @@
         <div class="envelope-container">
             <div class="envelope" id="envelope">
                 <div class="back">
-                    <div class="flap"></div>
+                    <div class="flap">
+                        <div class="flap-front">
+                            <img src="./assets/Flap.webp" alt="" />
+                        </div>
+                        <div class="flap-inside">
+                            <img src="./assets/Flap Inside.webp" alt="" />
+                        </div>
+                    </div>
 
-                    <div class="back-cutout"></div>
-                    <div class="back-background"></div>
+                    <div class="back-cutout">
+                        <img src="./assets/Back Cutout.webp" alt="" />
+                    </div>
+                    <div class="back-background">
+                        <img src="./assets/Lining.webp" alt="" />
+                    </div>
 
                     <div class="invitation">
-                        <h1>John & Jane</h1>
-                        <p>Request the honor of your presence</p>
-                        <p>at their wedding</p>
-                        <p>Date: June 15, 2024</p>
-                        <p>Venue: Grand Hall</p>
+                        <img src="./assets/Invitation.webp" alt="Invitation" />
                     </div>
                 </div>
 
-                <div class="front">Click to Open!</div>
+                <div class="front">
+                    <span id="greeting"></span>
+                    <img src="./assets/Front.webp" alt="Envelope" />
+                </div>
             </div>
         </div>
 
@@ -40,6 +50,8 @@
             envelope.addEventListener("click", () => {
                 if (!isFlipped) {
                     envelope.classList.add("show-back");
+                    envelope.style.cursor = "default";
+
                     isFlipped = true;
 
                     setTimeout(() => {
@@ -62,15 +74,12 @@
         </script>
 
         <script>
-            // Step 1: Get the current URL
             const urlParams = new URLSearchParams(window.location.search);
 
-            // Step 2: Get specific parameters
             const names = urlParams.get("names") ?? "";
             const param2 = urlParams.get("hasPlusOne");
 
-            // Step 3: Display the parameters (or use them in your logic)
-            const outputElement = document.querySelector(".front");
+            const outputElement = document.querySelector("#greeting");
             outputElement.textContent = `Hello ${names}`;
         </script>
     </body>
