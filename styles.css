@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Salina';
+  src: url('fonts/Salina.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   display: flex;
   justify-content: center;
@@ -40,9 +47,6 @@ body {
 .front {
   transform: rotateY(0deg);
   z-index: 2;
-  font-size: 18px;
-  font-weight: bold;
-  color: #555;
 }
 
 .front #greeting {
@@ -50,8 +54,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 15px 35px;
+  font-family: 'Salina', sans-serif;
+  font-size: 25px;
+  text-align: center;
 }
 
 .front img {

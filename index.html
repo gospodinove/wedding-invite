@@ -24,7 +24,7 @@
                         <img src="./assets/Back Cutout.webp" alt="" />
                     </div>
                     <div class="back-background">
-                        <img src="./assets/Lining.webp" alt="" />
+                        <img src="./assets/Lining.jpg" alt="" />
                     </div>
 
                     <div class="invitation">
@@ -77,10 +77,9 @@
             const urlParams = new URLSearchParams(window.location.search);
 
             const names = urlParams.get("names") ?? "";
-            const param2 = urlParams.get("hasPlusOne");
 
             const outputElement = document.querySelector("#greeting");
-            outputElement.textContent = `Hello ${names}`;
+            outputElement.textContent = names;
         </script>
     </body>
 </html>
