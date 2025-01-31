@@ -133,7 +133,8 @@ body {
 
 .invitation {
   position: absolute;
-  width: 100%;
+  width: 500px;
+  max-width: 70%;
   height: 100%;
   aspect-ratio: 300/450;
   top: 50%;
